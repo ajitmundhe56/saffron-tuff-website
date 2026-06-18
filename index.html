@@ -133,10 +133,8 @@ nav.nav-hidden {
   transform: translateY(-100%);
 }
 .nav-logo {
-  display: flex; flex-direction: column; gap: 2px;
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 1.7rem; color: var(--gold-light);
-  letter-spacing: 0.02em; line-height: 1.05;
+  display: flex; flex-direction: row; align-items: center;
+  /* flex-direction was column — caused height collapse on logo wrapper */
 }
 .nav-logo-sub {
   font-family: var(--font-body); font-size: 0.55rem; font-weight: 600;
@@ -880,81 +878,70 @@ footer {
 }
 
 /* ── Logo Image Styling ── */
-.nav-logo-img {
-  width: 160px;          /* explicit width — fixes img width:100% collapsing to 0 */
-  max-width: 180px;
-  height: auto;
+
+/* The anchor tag that wraps everything */
+a.nav-logo {
   display: flex;
   align-items: center;
-  margin-right: 0;
+  text-decoration: none;
   flex-shrink: 0;
 }
-.nav-logo-img img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
+
+/* Flex wrapper — no width:100% (it was inheriting 0 from collapsed parent) */
 .nav-logo-wrapper {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 0;
+}
+
+/* The img container — explicit width, never collapses */
+.nav-logo-img {
+  display: block;
+  width: 160px;
+  flex-shrink: 0;
+  line-height: 0;  /* removes phantom gap below inline img */
+}
+
+/* The actual img tag */
+.nav-logo-img img {
+  display: block;
   width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-height: 52px;  /* keeps logo within 68px navbar */
 }
-.nav-logo-wrapper div:last-child {
-  display: none;
-}
-/* Desktop navbar logo sizing */
+
+/* Desktop override */
 nav .nav-logo-img {
-  width: 180px;          /* explicit width on desktop */
-  max-width: 200px;
+  width: 160px;
 }
-/* Mobile navbar logo sizing */
-@media (max-width: 768px) {
-  .nav-logo-img {
-    width: 140px;
-    max-width: 150px;
-  }
-  nav .nav-logo-img {
-    width: 130px;
-    max-width: 140px;
-  }
+
+/* Tablet */
+@media (max-width: 900px) {
+  nav .nav-logo-img { width: 140px; }
 }
+
+/* Mobile */
 @media (max-width: 600px) {
-  .nav-logo-img {
-    width: 110px;
-    max-width: 120px;
-  }
-  nav .nav-logo-img {
-    width: 100px;
-    max-width: 110px;
-  }
+  nav .nav-logo-img { width: 120px; }
+  nav .nav-logo-img img { max-height: 44px; }
 }
-@media (max-width: 480px) {
-  .nav-logo-img {
-    width: 90px;
-    max-width: 100px;
-  }
-  nav .nav-logo-img {
-    width: 80px;
-    max-width: 90px;
-  }
+
+@media (max-width: 400px) {
+  nav .nav-logo-img { width: 100px; }
+  nav .nav-logo-img img { max-height: 38px; }
 }
-/* Footer logo sizing - show larger */
+
+/* Footer logo — larger display */
 footer .nav-logo-img {
-  width: 260px;
-  max-width: 280px;
+  width: 240px;
+  max-height: none;
   margin-bottom: 1.5rem;
 }
-footer .nav-logo-wrapper div:last-child {
-  display: none;
+footer .nav-logo-img img {
+  max-height: none;
 }
 @media (max-width: 600px) {
-  footer .nav-logo-img {
-    width: 200px;
-    max-width: 220px;
-  }
+  footer .nav-logo-img { width: 180px; }
 }
 
 </style>
